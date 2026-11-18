@@ -12,6 +12,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 
+import javax.swing.JPopupMenu;
+import javax.swing.JMenuItem;
+
 public class PetWindow extends JFrame {
 	
 	
@@ -33,7 +36,14 @@ public class PetWindow extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         add(dogLabel);
 
+        JPopupMenu popupMenu = new JPopupMenu();
+        JMenuItem exitItem = new JMenuItem("종료");
+
+        popupMenu.add(exitItem);
         
+        exitItem.addActionListener(e -> {
+            System.exit(0);
+        });
         
         
         dogLabel.addMouseListener(new MouseAdapter() {
@@ -48,6 +58,13 @@ public class PetWindow extends JFrame {
             	System.out.println("y좌표: "+startY);
 
 
+            }
+            
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if (e.isPopupTrigger()) {
+                    popupMenu.show(dogLabel, e.getX(), e.getY());
+                }
             }
         });
         
@@ -65,7 +82,7 @@ public class PetWindow extends JFrame {
             }
         });
         
-        
+
         
         
         setVisible(true);
